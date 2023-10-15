@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/RyanHeiser/ikea-god-bot/issues"
   },
-  "homepage": "https://github.com/RyanHeiser/ikea-god-bot#readme"
+  "homepage": "https://github.com/RyanHeiser/ikea-god-bot#readme",
+  "dependencies": {
+    "discord.js": "^14.13.0"
+  }
 }
