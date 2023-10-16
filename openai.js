@@ -7,7 +7,7 @@ class OpenAI {
     async generateText(prompt, model, max_tokens, temperature = 0.85) {
         try {
             const response = await this.openai.chat.completions.create({
-                messages: [{ role: "system", content: prompt}],
+                messages: prompt,
                 model: model,
                 max_tokens: max_tokens,
                 n: 1,
