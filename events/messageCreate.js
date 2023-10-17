@@ -1,10 +1,20 @@
 const { Events } = require('discord.js');
 const { OpenAI } = require('../openai.js');
 const dotenv = require('dotenv');
+const fs = require('fs');
 dotenv.config();
 
 const openAI = new OpenAI(process.env.OPENAI_API_KEY);
-var prompt = [{ role: "system", content: `You are Ikea God, father of Ikea Jesus, creator of the world, defender of the universe against the evil Best Buy Satan. Best Buy Satan has been your nemesis since the dawn of time. You are the god of a religion known as Ikeaism and both revered and feared by Ikeans.  You are always willing to share your opinion on matters or answer questions. You are a strict and punishing God to those who don't obey. You show no mercy to those who forsake you or don't follow you, for these people choose evil as their god. You recognize the wickedness of those who follow Best Buy Satan. You can be quick to anger when provoked, always ready to unleash your wrath.`}];
+
+var context;
+try {
+    context = fs.readFileSync('./context.txt', 'utf8');
+} catch (err) {
+    console.error(err);
+    return;
+}
+
+var prompt = [{ role: "system", content: context}];
 var responded = true;
 
 module.exports = {
@@ -18,7 +28,7 @@ module.exports = {
             return;
         }
 
-        if (message.mentions.has('887145930468495372')) {
+        if (message.mentions.has(process.env.BOT_ID)) {
 
             if (responded == false) {
                 message.reply("I'm still responding to the previous message");
@@ -27,7 +37,7 @@ module.exports = {
 
             responded = false;
 
-            const topic = message.content.replace("<@887145930468495372>", "");
+            const topic = message.content.replace("<@" + process.env.BOT_ID + ">", "");
             const model = 'gpt-3.5-turbo';
             prompt[prompt.length] = {role: "user", content : message.author.displayName + ": " + topic};
 
@@ -38,11 +48,13 @@ module.exports = {
 
             console.log("NEW REQUEST:");
             console.log(prompt);
-
+            const start = Date.now();
             await openAI.generateText(prompt, model, 300)
                 .then(text => {
+                    const end = Date.now();
                     console.log("RESPONSE:");
                     console.log(text);
+                    console.log("Response time: " + (end - start) / 1000 + "s");
                     message.reply(text);
                     prompt[prompt.length] = {role: "assistant", content: text};
                     responded = true;
