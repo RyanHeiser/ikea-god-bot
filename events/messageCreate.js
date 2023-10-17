@@ -49,7 +49,7 @@ module.exports = {
             console.log("NEW REQUEST:");
             console.log(prompt);
             const start = Date.now();
-            await openAI.generateText(prompt, model, 300)
+            await openAI.generateText(prompt, model, 1000)
                 .then(text => {
                     const end = Date.now();
                     console.log("RESPONSE:");
