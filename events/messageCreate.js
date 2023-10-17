@@ -33,7 +33,7 @@ module.exports = {
 
             // don't allow a completion request if one is already being handled
             if (responded == false) {
-                message.reply("Patience. I am still responding to the previous message");
+                message.reply("Patience. I am still responding to the previous message.");
                 return;
             }
             responded = false;
@@ -51,7 +51,7 @@ module.exports = {
             console.log("NEW REQUEST:");
             console.log(promptList);
             const start = Date.now();
-            await openAI.generateText(promptList, model, 700) // request chat completion
+            await openAI.generateText(promptList, model, 500) // request chat completion
                 .then(text => {
                     const end = Date.now();
                     console.log("RESPONSE:");
