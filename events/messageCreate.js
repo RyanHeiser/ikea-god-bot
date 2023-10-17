@@ -5,6 +5,7 @@ const fs = require('fs');
 dotenv.config();
 
 const openAI = new OpenAI(process.env.OPENAI_API_KEY);
+const maxMessageMemory = 7; // max # messages saved and sent in completion request including context string but not including most recent prompt
 
 var context;
 try {
@@ -14,7 +15,7 @@ try {
     return;
 }
 
-var prompt = [{ role: "system", content: context}];
+var promptList = [{ role: "system", content: context}];
 var responded = true;
 
 module.exports = {
@@ -30,36 +31,39 @@ module.exports = {
 
         if (message.mentions.has(process.env.BOT_ID)) {
 
+            // don't allow a completion request if one is already being handled
             if (responded == false) {
-                message.reply("I'm still responding to the previous message");
+                message.reply("Patience. I am still responding to the previous message");
                 return;
             }
-
             responded = false;
 
-            const topic = message.content.replace("<@" + process.env.BOT_ID + ">", "");
+            const prompt = message.content.replace("<@" + process.env.BOT_ID + ">", ""); // remove the bot's id from prompt
             const model = 'gpt-3.5-turbo';
-            prompt[prompt.length] = {role: "user", content : message.author.displayName + ": " + topic};
+            promptList[promptList.length] = {role: "user", content : message.author.displayName + ": " + prompt}; // add new prompt to end of list
 
-            if (topic.length > 300) {
+            // 
+            if (prompt.length > 300) {
                 message.channel.send("I'm not reading all that");
                 return;
             }
 
             console.log("NEW REQUEST:");
-            console.log(prompt);
+            console.log(promptList);
             const start = Date.now();
-            await openAI.generateText(prompt, model, 700)
+            await openAI.generateText(promptList, model, 700) // request chat completion
                 .then(text => {
                     const end = Date.now();
                     console.log("RESPONSE:");
                     console.log(text);
-                    console.log("Response time: " + (end - start) / 1000 + "s");
+                    console.log("Response time: " + (end - start) / 1000 + "s"); // log the time between completion request and response
                     message.reply(text);
-                    prompt[prompt.length] = {role: "assistant", content: text};
+                    promptList[promptList.length] = {role: "assistant", content: text}; // add completion to end of list
                     responded = true;
-                    while (prompt.length > 7) {
-                        prompt.splice(1, 2);
+
+                    // remove prompts after the context prompt from front of list until 7 or less remain
+                    while (promptList.length > maxMessageMemory) {
+                        promptList.splice(1, 2);
                     }
                 })
                 .catch(error => {
