@@ -4,7 +4,7 @@ class OpenAI {
     constructor(apiKey) {
         this.openai = new OpenAIApi(new Configuration({ apiKey }));
     }
-    async generateText(prompt, model, max_tokens, temperature = 0.85) {
+    async generateText(prompt, model, max_tokens, temperature = 1) {
         try {
             const response = await this.openai.chat.completions.create({
                 messages: prompt,
