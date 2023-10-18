@@ -6,6 +6,7 @@ dotenv.config();
 
 const openAI = new OpenAI(process.env.OPENAI_API_KEY);
 const maxMessageMemory = 7; // max # messages saved and sent in completion request including context string but not including most recent prompt
+const maxCharPrompt = 300;
 
 var context;
 try {
@@ -42,8 +43,8 @@ module.exports = {
             const model = 'gpt-3.5-turbo';
             promptList[promptList.length] = {role: "user", content : message.author.displayName + ": " + prompt}; // add new prompt to end of list
 
-            // 
-            if (prompt.length > 300) {
+            // limits the size of message to add to prompList
+            if (prompt.length > maxCharPrompt) {
                 message.channel.send("I'm not reading all that");
                 return;
             }
