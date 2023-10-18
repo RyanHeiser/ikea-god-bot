@@ -40,7 +40,7 @@ module.exports = {
             responded = false;
 
             const prompt = message.content.replace("<@" + process.env.BOT_ID + ">", ""); // remove the bot's id from prompt
-            const model = 'gpt-3.5-turbo';
+            const model = 'gpt-4';
             promptList[promptList.length] = {role: "user", content : message.author.displayName + ": " + prompt}; // add new prompt to end of list
 
             // limits the size of message to add to prompList
