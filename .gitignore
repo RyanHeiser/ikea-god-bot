@@ -1,2 +1,4 @@
 *.env
 *.bat
+config.json
+.eslintrc.json

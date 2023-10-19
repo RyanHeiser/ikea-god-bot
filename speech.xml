@@ -1,0 +1,12 @@
+<!--ID=B7267351-473F-409D-9765-754A8EBCDE05;Version=1|{"VoiceNameToIdMapItems":[{"Id":"b5f86142-ce84-4483-8142-45db0d778add","Name":"Microsoft Server Speech Text to Speech Voice (en-US, DavisNeural)","ShortName":"en-US-DavisNeural","Locale":"en-US","VoiceType":"StandardVoice"}]}-->
+<speak xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml" version="1.0" xml:lang="en-US">
+    <voice name="Microsoft Server Speech Text to Speech Voice (en-US, JasonNeural)">
+        <s />
+            <mstts:express-as style="shouting">
+                <prosody rate="0.00%" volume="+50.00%" pitch="-30.00%">
+                    sample text
+                </prosody>
+            </mstts:express-as>
+        <s />
+    </voice>
+</speak>

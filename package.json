@@ -17,8 +17,22 @@
   },
   "homepage": "https://github.com/RyanHeiser/ikea-god-bot#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.9.0",
+    "@discordjs/voice": "^0.16.0",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
-    "openai": "^4.12.1"
+    "express": "^4.18.2",
+    "fast-xml-parser": "^4.3.2",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^5.2.0",
+    "libsodium-wrappers": "^0.7.13",
+    "microsoft-cognitiveservices-speech-sdk": "^1.32.0",
+    "openai": "^4.12.1",
+    "sodium-native": "^4.0.4",
+    "ssml": "^0.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.51.0",
+    "xml2js": "^0.6.2"
   }
 }
