@@ -3,7 +3,7 @@
     <voice name="Microsoft Server Speech Text to Speech Voice (en-US, JasonNeural)">
         <s />
             <mstts:express-as style="shouting">
-                <prosody rate="0.00%" volume="+50.00%" pitch="-30.00%">
+                <prosody rate="+25.00%" volume="+50.00%" pitch="-35.00%">
                     sample text
                 </prosody>
             </mstts:express-as>

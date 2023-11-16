@@ -25,6 +25,7 @@ function speechSynthesis(text) {
 
         var ssml = xmlToString('./speech.xml');
         ssml = ssml.replace("sample text", text);
+        ssml = ssml.replaceAll("<@" + process.env.BEST_BUY_ID + ">", "");
         synthesizer.speakSsmlAsync(ssml,
             function (result) {
         if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
